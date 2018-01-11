@@ -1,25 +1,17 @@
-#Sieve of Eratosthenes
-# Very Inefficient!
+MAX = 2000000
 
-MAX = 2000001
-
-numbers = list(range(2, MAX, 1))
-primesVal = 0
-count = 0
-
-
-while(len(numbers) > 0):    
-    numbers = sorted(numbers)    
-    temp = numbers[0]
-    primesVal += numbers[0]
-    del numbers[0]
+if MAX % 2 == 0: 
+    MAX += 1
     
-    multiples = list(range(temp*temp, MAX, temp))
-    numbers = list(set(numbers).difference(set(multiples)))
-    
-    #Debugging
-    count += 1
-    if (count % 250 == 0):        
-       print("Numbers ", len(numbers))
+numbers = [True] * MAX
+numbers[0],numbers[1] = [False] * 2
+sum = 0
 
-print(primesVal)
+for i,val in enumerate(numbers):
+    if val is True and i > MAX ** 0.5 + 1:
+        sum += i
+    elif val is True:         
+        numbers[i*2::i] = [False] * (((MAX - 1)//i) - 1)
+        sum += i
+
+print(sum)
